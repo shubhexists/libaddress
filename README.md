@@ -4,13 +4,23 @@
 
 `libaddress-validator` is a robust TypeScript/JavaScript library designed for handling addresses across multiple countries. It provides a flexible and extensible system to work with country-specific address formats while maintaining a common interface.
 
+## What Problem Does This Solve?
+
+Dealing with addresses from different countries can be a real headache for developers. Every country has its own unique way of formatting addresses:
+
+- In India, you have cities, states, and PIN codes.
+- The UK uses counties and postcodes.
+- Ireland has its own system with Eircodes.
+
+This variety makes it challenging to create a one-size-fits-all solution for handling addresses in global applications. That's where `libaddress-validator` comes in. It provides a flexible system that understands and validates addresses from various countries, making it easier for developers to work with international addresses without getting bogged down in the details of each country's format.
+
 ## Features
 
 - Custom Address Support for all major countries
 - A good enough fallback for other countries
-- Extensible architecture allowing easy addition of new country formats.
-- Common interface for all address types.
-- TypeScript support for enhanced type safety and developer experience.
+- Extensible architecture allowing easy addition of new country formats
+- Common interface for all address types
+- TypeScript support for enhanced type safety and developer experience
 
 ## Installation
 
@@ -37,9 +47,8 @@ try {
     stateProvinceRegion: 'Western Cape',
     postalCode: '8001',
     isDefault: true,
-    extra: 'Apartment 4B'
+    extra: 'Apartment 4B',
   });
-
   console.log(address);
 } catch (error) {
   console.error('Invalid address:', error.message);
@@ -83,9 +92,11 @@ const ukAddress = createAddress('UnitedKingdom', {
 Returns the appropriate address class for the given country code. If no specific class is found, it returns the `CommonAddress` class.
 
 #### Parameters
+
 - `countryCode`: A string literal type representing supported countries (e.g., 'UnitedStates', 'UnitedKingdom', 'SouthAfrica')
 
 #### Returns
+
 A constructor for the country-specific Address class.
 
 ### Country-specific Address Classes
