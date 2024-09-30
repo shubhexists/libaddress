@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import BaseAddress from '../base_address';
+import { southAfricaAddressSchema } from '../validations/model_validations';
 
 export default class SouthAfricaAddress extends BaseAddress {
   streetNumber: string;
@@ -7,22 +9,18 @@ export default class SouthAfricaAddress extends BaseAddress {
   stateProvinceRegion: string;
   postalCode: string;
 
-  constructor(
-    fullName: string,
-    mobileNumber: string,
-    streetNumber: string,
-    city: string,
-    area: string,
-    stateProvinceRegion: string,
-    postalCode: string,
-    extra?: string,
-    isDefault: boolean = false
-  ) {
-    super(fullName, mobileNumber, isDefault, extra);
-    this.streetNumber = streetNumber;
-    this.city = city;
-    this.area = area;
-    this.stateProvinceRegion = stateProvinceRegion;
-    this.postalCode = postalCode;
+  constructor(data: z.infer<typeof southAfricaAddressSchema>) {
+    const validated = southAfricaAddressSchema.parse(data);
+    super({
+      fullName: validated.fullName,
+      mobileNumber: validated.mobileNumber,
+      isDefault: validated.isDefault,
+      extra: validated.extra,
+    });
+    this.streetNumber = validated.streetNumber;
+    this.city = validated.city;
+    this.area = validated.area;
+    this.stateProvinceRegion = validated.stateProvinceRegion;
+    this.postalCode = validated.postalCode;
   }
 }

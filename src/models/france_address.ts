@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import BaseAddress from '../base_address';
+import { franceAddressSchema } from '../validations/model_validations';
 
 export default class FranceAddress extends BaseAddress {
   streetAddress: string;
@@ -6,20 +8,17 @@ export default class FranceAddress extends BaseAddress {
   pincode: string;
   city: string;
 
-  constructor(
-    fullName: string,
-    mobileNumber: string,
-    streetAddress: string,
-    pincode: string,
-    city: string,
-    apartmentSuiteUnitBuilding?: string,
-    extra?: string,
-    isDefault: boolean = false
-  ) {
-    super(fullName, mobileNumber, isDefault, extra);
-    this.streetAddress = streetAddress;
-    this.pincode = pincode;
-    this.city = city;
-    this.apartmentSuiteUnitBuilding = apartmentSuiteUnitBuilding;
+  constructor(data: z.infer<typeof franceAddressSchema>) {
+    const validated = franceAddressSchema.parse(data);
+    super({
+      fullName: validated.fullName,
+      mobileNumber: validated.mobileNumber,
+      isDefault: validated.isDefault,
+      extra: validated.extra,
+    });
+    this.streetAddress = validated.streetAddress;
+    this.pincode = validated.pincode;
+    this.city = validated.city;
+    this.apartmentSuiteUnitBuilding = validated.apartmentSuiteUnitBuilding;
   }
 }

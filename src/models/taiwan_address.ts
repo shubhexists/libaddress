@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import BaseAddress from '../base_address';
+import { taiwanAddressSchema } from '../validations/model_validations';
 
 export default class TaiwanAddress extends BaseAddress {
   address: string;
@@ -6,20 +8,17 @@ export default class TaiwanAddress extends BaseAddress {
   district: string;
   city: string;
 
-  constructor(
-    fullName: string,
-    mobileNumber: string,
-    address: string,
-    pincode: string,
-    district: string,
-    city: string,
-    isDefault: boolean = false,
-    extra?: string
-  ) {
-    super(fullName, mobileNumber, isDefault, extra);
-    this.address = address;
-    this.pincode = pincode;
-    this.district = district;
-    this.city = city;
+  constructor(data: z.infer<typeof taiwanAddressSchema>) {
+    const validated = taiwanAddressSchema.parse(data);
+    super({
+      fullName: validated.fullName,
+      mobileNumber: validated.mobileNumber,
+      isDefault: validated.isDefault,
+      extra: validated.extra,
+    });
+    this.address = validated.address;
+    this.pincode = validated.pincode;
+    this.district = validated.district;
+    this.city = validated.city;
   }
 }

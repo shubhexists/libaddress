@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import BaseAddress from '../base_address';
+import { turkeyAddressSchema } from '../validations/model_validations';
 
 export default class TurkeyAddress extends BaseAddress {
   address: string;
@@ -7,22 +9,18 @@ export default class TurkeyAddress extends BaseAddress {
   area?: string;
   postalCode: string;
 
-  constructor(
-    fullName: string,
-    mobileNumber: string,
-    address: string,
-    city: string,
-    postalCode: string,
-    stateProvinceRegion?: string,
-    area?: string,
-    isDefault: boolean = false,
-    extra?: string
-  ) {
-    super(fullName, mobileNumber, isDefault, extra);
-    this.address = address;
-    this.city = city;
-    this.postalCode = postalCode;
-    this.stateProvinceRegion = stateProvinceRegion;
-    this.area = area;
+  constructor(data: z.infer<typeof turkeyAddressSchema>) {
+    const validated = turkeyAddressSchema.parse(data);
+    super({
+      fullName: validated.fullName,
+      mobileNumber: validated.mobileNumber,
+      isDefault: validated.isDefault,
+      extra: validated.extra,
+    });
+    this.address = validated.address;
+    this.city = validated.city;
+    this.postalCode = validated.postalCode;
+    this.stateProvinceRegion = validated.stateProvinceRegion;
+    this.area = validated.area;
   }
 }

@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import BaseAddress from '../base_address';
+import { koreaAddressSchema } from '../validations/model_validations';
 
 export default class RepublicOfKoreaAddress extends BaseAddress {
   address: string;
@@ -6,20 +8,17 @@ export default class RepublicOfKoreaAddress extends BaseAddress {
   city: string;
   province: string;
 
-  constructor(
-    fullName: string,
-    mobileNumber: string,
-    address: string,
-    zipCode: string,
-    city: string,
-    province: string,
-    isDefault: boolean = false,
-    extra?: string
-  ) {
-    super(fullName, mobileNumber, isDefault, extra);
-    this.address = address;
-    this.zipCode = zipCode;
-    this.city = city;
-    this.province = province;
+  constructor(data: z.infer<typeof koreaAddressSchema>) {
+    const validated = koreaAddressSchema.parse(data);
+    super({
+      fullName: validated.fullName,
+      mobileNumber: validated.mobileNumber,
+      isDefault: validated.isDefault,
+      extra: validated.extra,
+    });
+    this.address = validated.address;
+    this.zipCode = validated.zipCode;
+    this.city = validated.city;
+    this.province = validated.province;
   }
 }

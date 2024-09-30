@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import BaseAddress from '../base_address';
+import { uaeAddressSchema } from '../validations/model_validations';
 
 export default class UnitedArabEmiratesAddress extends BaseAddress {
   streetNumber: string;
@@ -7,22 +9,18 @@ export default class UnitedArabEmiratesAddress extends BaseAddress {
   areaDistrict: string;
   nearestLandmark?: string;
 
-  constructor(
-    fullName: string,
-    mobileNumber: string,
-    streetNumber: string,
-    buildingNameNo: string,
-    city: string,
-    areaDistrict: string,
-    nearestLandmark?: string,
-    extra?: string,
-    isDefault: boolean = false
-  ) {
-    super(fullName, mobileNumber, isDefault, extra);
-    this.streetNumber = streetNumber;
-    this.buildingNameNo = buildingNameNo;
-    this.city = city;
-    this.areaDistrict = areaDistrict;
-    this.nearestLandmark = nearestLandmark;
+  constructor(data: z.infer<typeof uaeAddressSchema>) {
+    const validated = uaeAddressSchema.parse(data);
+    super({
+      fullName: validated.fullName,
+      mobileNumber: validated.mobileNumber,
+      isDefault: validated.isDefault,
+      extra: validated.extra,
+    });
+    this.streetNumber = validated.streetNumber;
+    this.buildingNameNo = validated.buildingNameNo;
+    this.city = validated.city;
+    this.areaDistrict = validated.areaDistrict;
+    this.nearestLandmark = validated.nearestLandmark;
   }
 }

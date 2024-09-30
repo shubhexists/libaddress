@@ -1,5 +1,7 @@
 import { IndianStates } from '../enums';
 import BaseAddress from '../base_address';
+import { z } from 'zod';
+import { indiaAddressSchema } from '../validations/model_validations';
 
 export default class IndiaAddress extends BaseAddress {
   pincode: string;
@@ -9,24 +11,19 @@ export default class IndiaAddress extends BaseAddress {
   townCity: string;
   state: IndianStates;
 
-  constructor(
-    fullName: string,
-    mobileNumber: string,
-    pincode: string,
-    flatHouseNoBuildingCompanyApartment: string,
-    areaStreetSectorVillage: string,
-    townCity: string,
-    state: IndianStates,
-    landmark?: string,
-    extra?: string,
-    isDefault: boolean = false
-  ) {
-    super(fullName, mobileNumber, isDefault, extra);
-    this.pincode = pincode;
-    this.flatHouseNoBuildingCompanyApartment = flatHouseNoBuildingCompanyApartment;
-    this.areaStreetSectorVillage = areaStreetSectorVillage;
-    this.townCity = townCity;
-    this.state = state;
-    this.landmark = landmark;
+  constructor(data: z.infer<typeof indiaAddressSchema>) {
+    const validated = indiaAddressSchema.parse(data);
+    super({
+      fullName: validated.fullName,
+      mobileNumber: validated.mobileNumber,
+      isDefault: validated.isDefault,
+      extra: validated.extra,
+    });
+    this.pincode = validated.pincode;
+    this.flatHouseNoBuildingCompanyApartment = validated.flatHouseNoBuildingCompanyApartment;
+    this.areaStreetSectorVillage = validated.areaStreetSectorVillage;
+    this.townCity = validated.townCity;
+    this.state = validated.state;
+    this.landmark = validated.landmark;
   }
 }

@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import BaseAddress from './base_address';
+import { commonAddressSchema } from './validations';
 
 export default class CommonAddress extends BaseAddress {
   postOfficeBoxAddressName: string;
@@ -7,22 +9,13 @@ export default class CommonAddress extends BaseAddress {
   stateProvinceRegion?: string;
   pincode: string;
 
-  constructor(
-    fullName: string,
-    mobileNumber: string,
-    postOfficeBoxAddressName: string,
-    city: string,
-    pincode: string,
-    apartmentSuiteUnitBuilding?: string,
-    stateProvinceRegion?: string,
-    extra?: string,
-    isDefault: boolean = false
-  ) {
-    super(fullName, mobileNumber, isDefault, extra);
-    this.postOfficeBoxAddressName = postOfficeBoxAddressName;
-    this.city = city;
-    this.pincode = pincode;
-    this.apartmentSuiteUnitBuilding = apartmentSuiteUnitBuilding;
-    this.stateProvinceRegion = stateProvinceRegion;
+  constructor(data: z.infer<typeof commonAddressSchema>) {
+    super(data);
+    const validated = commonAddressSchema.parse(data);
+    this.postOfficeBoxAddressName = validated.postOfficeBoxAddressName;
+    this.city = validated.city;
+    this.pincode = validated.pincode;
+    this.apartmentSuiteUnitBuilding = validated.apartmentSuiteUnitBuilding;
+    this.stateProvinceRegion = validated.stateProvinceRegion;
   }
 }

@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import BaseAddress from '../base_address';
+import { hongKongAddressSchema } from '../validations/model_validations';
 
 export default class HongKongAddress extends BaseAddress {
   flatNumberFloorNumberBuildingName: string;
@@ -6,20 +8,17 @@ export default class HongKongAddress extends BaseAddress {
   villageTownDistrict: string;
   city: string;
 
-  constructor(
-    fullName: string,
-    mobileNumber: string,
-    flatNumberFloorNumberBuildingName: string,
-    streetNumberStreetName: string,
-    villageTownDistrict: string,
-    city: string,
-    extra?: string,
-    isDefault: boolean = false
-  ) {
-    super(fullName, mobileNumber, isDefault, extra);
-    this.flatNumberFloorNumberBuildingName = flatNumberFloorNumberBuildingName;
-    this.streetNumberStreetName = streetNumberStreetName;
-    this.villageTownDistrict = villageTownDistrict;
-    this.city = city;
+  constructor(data: z.infer<typeof hongKongAddressSchema>) {
+    const validated = hongKongAddressSchema.parse(data);
+    super({
+      fullName: validated.fullName,
+      mobileNumber: validated.mobileNumber,
+      isDefault: validated.isDefault,
+      extra: validated.extra,
+    });
+    this.flatNumberFloorNumberBuildingName = validated.flatNumberFloorNumberBuildingName;
+    this.streetNumberStreetName = validated.streetNumberStreetName;
+    this.villageTownDistrict = validated.villageTownDistrict;
+    this.city = validated.city;
   }
 }
