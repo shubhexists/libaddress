@@ -1,20 +1,27 @@
 {
   "name": "libaddress-validator",
-  "version": "0.1.0",
-  "description": "",
+  "version": "0.1.4",
+  "description": "A utility package to validate international addresses for different formats",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "type-check": "tsc --noEmit",
     "test": "jest"
   },
+  "type": "commonjs",
   "keywords": [],
   "author": "Shubham Singh <shubh622005@gmail.com>",
   "license": "MIT",

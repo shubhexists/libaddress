@@ -9,8 +9,7 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "rootDir": "."
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["index.ts", "src/**/*"],
   "exclude": ["node_modules", "dist"]
