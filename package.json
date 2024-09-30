@@ -1,5 +1,5 @@
 {
-  "name": "libaddress",
+  "name": "libaddress-validator",
   "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",

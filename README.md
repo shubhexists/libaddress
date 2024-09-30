@@ -1,8 +1,8 @@
-# libaddress
+# libaddress-validator
 
 ## Overview
 
-`libaddress` is a robust TypeScript/JavaScript library designed for handling addresses across multiple countries. It provides a flexible and extensible system to work with country-specific address formats while maintaining a common interface.
+`libaddress-validator` is a robust TypeScript/JavaScript library designed for handling addresses across multiple countries. It provides a flexible and extensible system to work with country-specific address formats while maintaining a common interface.
 
 ## Features
 
@@ -15,7 +15,7 @@
 ## Installation
 
 ```bash
-npm install libaddress
+npm install libaddress-validator
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ npm install libaddress
 ### Basic Usage
 
 ```typescript
-import { getAddressClass } from 'libaddress';
+import { getAddressClass } from 'libaddress-validator';
 
 const SouthAfricaAddress = getAddressClass('SouthAfrica');
 
@@ -49,7 +49,7 @@ try {
 ### Working with Different Countries
 
 ```typescript
-import { getAddressClass, CountryCode } from 'libaddress';
+import { getAddressClass, CountryCode } from 'libaddress-validator';
 
 function createAddress(country: CountryCode, addressData: any) {
   const AddressClass = getAddressClass(country);
