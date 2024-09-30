@@ -779,11 +779,11 @@ describe('SaudiArabiaAddress', () => {
       buildingNameNo: 'Building 456',
       city: 'Riyadh',
       isDefault: true,
-      area: '',
-      province: '',
+      area: 'test-area',
+      province: 'test-province',
     };
 
-    expect(() => new Models.SaudiArabiaAddress(invalidData)).toThrow();
+    expect(() => new Models.SaudiArabiaAddress(invalidData)).toThrowError();
   });
 });
 
@@ -791,7 +791,7 @@ describe('SingaporeAddress', () => {
   it('should create an instance of SingaporeAddress with valid data', () => {
     const data = {
       fullName: 'Tan Ah Kow',
-      mobileNumber: '81234567',
+      mobileNumber: '9981234567',
       isDefault: false,
       extra: 'Extra info',
       postalCode: '123456',
