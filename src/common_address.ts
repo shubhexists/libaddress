@@ -10,8 +10,13 @@ export default class CommonAddress extends BaseAddress {
   pincode: string;
 
   constructor(data: z.infer<typeof commonAddressSchema>) {
-    super(data);
     const validated = commonAddressSchema.parse(data);
+    super({
+      fullName: validated.fullName,
+      mobileNumber: validated.mobileNumber,
+      isDefault: validated.isDefault,
+      extra: validated.extra,
+    });
     this.postOfficeBoxAddressName = validated.postOfficeBoxAddressName;
     this.city = validated.city;
     this.pincode = validated.pincode;
